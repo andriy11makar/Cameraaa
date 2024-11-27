@@ -1,122 +1,151 @@
-
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phone Camera Stream</title>
-    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"></script>
+    <title>Loft Store</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 20px; }
-        video { width: 90%; max-width: 600px; border: 2px solid black; margin: 10px 0; }
-        button { padding: 10px 20px; font-size: 16px; }
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 2em;
+            text-transform: uppercase;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #222;
+            padding: 10px;
+        }
+
+        nav a {
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            background-color: #444;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            width: 300px;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .product-name {
+            font-size: 1.5em;
+            margin-top: 15px;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 1.2em;
+            color: #e74c3c;
+            margin-top: 10px;
+        }
+
+        .product-description {
+            font-size: 1em;
+            color: #555;
+            margin-top: 15px;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
     </style>
 </head>
 <body>
-    <h1>Phone Camera Stream</h1>
-    <p>Відкрий це посилання на телефоні та комп'ютері для обміну відео.</p>
-    <video id="localVideo" autoplay muted playsinline></video>
-    <video id="remoteVideo" autoplay playsinline></video>
-    <br>
-    <button id="startCall">OK</button>
-    <button id="joinCall">Join Call</button>
 
-    <script>
-        // Firebase конфігурація
-        const firebaseConfig = {
-            apiKey: "AIzaSyC-EcWyERCiOi8MWkTZMfz94dXCoKxxetA",
-            authDomain: "webcam-c04c0.firebaseapp.com",
-            databaseURL: "https://webcam-c04c0-default-rtdb.firebaseio.com",
-            projectId: "webcam-c04c0",
-            storageBucket: "webcam-c04c0.firebasestorage.app",
-            messagingSenderId: "801349081025",
-            appId: "1:801349081025:web:3e92fc5e06f036ab6e4140"
-        };
+    <header>
+        Loft Store
+    </header>
 
-        // Ініціалізація Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Shop</a>
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+    </nav>
 
-        const localVideo = document.getElementById('localVideo');
-        const remoteVideo = document.getElementById('remoteVideo');
-        const startCallButton = document.getElementById('startCall');
-        const joinCallButton = document.getElementById('joinCall');
-        let localStream;
-        let peerConnection;
+    <div class="container">
+        <div class="product-card">
+            <img src="https://via.placeholder.com/300" alt="Product 1">
+            <div class="product-name">Industrial Lamp</div>
+            <div class="product-price">$150</div>
+            <div class="product-description">A stylish industrial lamp to brighten your space. Made of raw metal and wood.</div>
+            <button>Buy Now</button>
+        </div>
 
-        const servers = {
-            iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
-        };
+        <div class="product-card">
+            <img src="https://via.placeholder.com/300" alt="Product 2">
+            <div class="product-name">Wooden Coffee Table</div>
+            <div class="product-price">$250</div>
+            <div class="product-description">A sleek, minimalist coffee table made from reclaimed wood.</div>
+            <button>Buy Now</button>
+        </div>
 
-        async function getMedia() {
-            try {
-                // Запит на доступ до камери
-                localStream = await navigator.mediaDevices.getUserMedia({ video: true });
-                localVideo.srcObject = localStream;  // Показати відео на сторінці
-            } catch (error) {
-                alert('Не вдалося отримати доступ до камери: ' + error.message);
-            }
-        }
+        <div class="product-card">
+            <img src="https://via.placeholder.com/300" alt="Product 3">
+            <div class="product-name">Metal Shelf</div>
+            <div class="product-price">$100</div>
+            <div class="product-description">A practical and aesthetic shelf for your home or office, crafted from strong metal.</div>
+            <button>Buy Now</button>
+        </div>
+    </div>
 
-        async function createOffer() {
-            peerConnection = new RTCPeerConnection(servers);
-            localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+    <footer>
+        <p>&copy; 2024 Loft Store. All rights reserved.</p>
+    </footer>
 
-            peerConnection.onicecandidate = event => {
-                if (event.candidate) {
-                    database.ref('/call').push({ candidate: event.candidate });
-                }
-            };
-
-            peerConnection.ontrack = event => {
-                remoteVideo.srcObject = event.streams[0];
-            };
-
-            const offer = await peerConnection.createOffer();
-            await peerConnection.setLocalDescription(offer);
-            database.ref('/call').set({ offer });
-        }
-
-        async function joinCall() {
-            peerConnection = new RTCPeerConnection(servers);
-
-            peerConnection.onicecandidate = event => {
-                if (event.candidate) {
-                    database.ref('/call').push({ candidate: event.candidate });
-                }
-            };
-
-            peerConnection.ontrack = event => {
-                remoteVideo.srcObject = event.streams[0];
-            };
-
-            database.ref('/call').on('value', async snapshot => {
-                const data = snapshot.val();
-                if (data?.offer && !peerConnection.currentRemoteDescription) {
-                    await peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
-                    const answer = await peerConnection.createAnswer();
-                    await peerConnection.setLocalDescription(answer);
-                    database.ref('/call').update({ answer });
-                }
-                if (data?.answer && !peerConnection.currentRemoteDescription) {
-                    await peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
-                }
-                if (data?.candidate) {
-                    await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
-                }
-            });
-        }
-
-        startCallButton.addEventListener('click', async () => {
-            await getMedia(); // Запит на доступ до камери
-            await createOffer(); // Створення пропозиції для WebRTC
-        });
-
-        joinCallButton.addEventListener('click', async () => {
-            await getMedia(); // Запит на доступ до камери
-            await joinCall(); // Підключення до існуючого дзвінка
-        });
-    </script>
 </body>
 </html>
+        
