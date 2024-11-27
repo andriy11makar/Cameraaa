@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+        <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,7 +19,7 @@
     <video id="localVideo" autoplay muted playsinline></video>
     <video id="remoteVideo" autoplay playsinline></video>
     <br>
-    <button id="startCall">Start Call</button>
+    <button id="startCall">OK</button>
     <button id="joinCall">Join Call</button>
 
     <script>
@@ -49,8 +50,13 @@
         };
 
         async function getMedia() {
-            localStream = await navigator.mediaDevices.getUserMedia({ video: true });
-            localVideo.srcObject = localStream;
+            try {
+                // Запит на доступ до камери
+                localStream = await navigator.mediaDevices.getUserMedia({ video: true });
+                localVideo.srcObject = localStream;  // Показати відео на сторінці
+            } catch (error) {
+                alert('Не вдалося отримати доступ до камери: ' + error.message);
+            }
         }
 
         async function createOffer() {
@@ -103,13 +109,13 @@
         }
 
         startCallButton.addEventListener('click', async () => {
-            await getMedia();
-            await createOffer();
+            await getMedia(); // Запит на доступ до камери
+            await createOffer(); // Створення пропозиції для WebRTC
         });
 
         joinCallButton.addEventListener('click', async () => {
-            await getMedia();
-            await joinCall();
+            await getMedia(); // Запит на доступ до камери
+            await joinCall(); // Підключення до існуючого дзвінка
         });
     </script>
 </body>
