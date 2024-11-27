@@ -55,7 +55,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
+            background: url('https://drive.google.com/uc?id=1JeKDAqRVm3JoMf1u5x67f7B_PQG9Y46M&export=view') no-repeat center center/cover;
         }
 
         .hero h1 {
@@ -102,6 +102,7 @@
             text-align: center;
             padding: 0 20px;
             background: #1a1a1a;
+            position: relative;
         }
 
         .section:nth-child(even) {
@@ -119,6 +120,13 @@
             max-width: 800px;
             margin: 20px auto;
             color: #bbb;
+        }
+
+        .subsection {
+            display: none;
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: #f1c40f;
         }
 
         button {
@@ -164,6 +172,7 @@
         <a href="#about">Про мене</a>
         <a href="#content">Контент</a>
         <a href="#contact">Контакти</a>
+        <a href="#socials">Соціальні мережі</a>
     </nav>
 
     <!-- Hero -->
@@ -173,15 +182,15 @@
             <p data-aos="fade-up">Контент, що заряджає гумором, життєвими історіями та несподіванками.</p>
             <div class="stats" data-aos="zoom-in">
                 <div class="stat">
-                    <span>1.2M</span>
+                    <span>1.5M</span>
                     TikTok
                 </div>
                 <div class="stat">
-                    <span>200K</span>
+                    <span>250K</span>
                     Instagram
                 </div>
                 <div class="stat">
-                    <span>50K</span>
+                    <span>60K</span>
                     YouTube
                 </div>
             </div>
@@ -192,14 +201,20 @@
     <div class="section" id="about">
         <h2 data-aos="zoom-in">Про мене</h2>
         <p data-aos="fade-right">Я почав створювати відео як експеримент, але швидко знайшов свій голос і стиль. Гумор і іронія — це те, що мене визначає. Завжди намагаюся показати життя з несподіваної сторони.</p>
-        <button>Дізнатись більше</button>
+        <button onclick="toggleSubsection('about-subsection')">Дізнатись більше</button>
+        <div id="about-subsection" class="subsection">
+            <p>Мене звати Tvoya Van. Я створюю контент для душі, зокрема в TikTok і Instagram, де піднімаю настрій мільйонам людей.</p>
+        </div>
     </div>
 
     <!-- Контент -->
     <div class="section" id="content">
         <h2 data-aos="zoom-in">Мій контент</h2>
         <p data-aos="fade-left">Переглядай відео на платформах TikTok, Instagram і YouTube. Вони надихають, дивують і піднімають настрій.</p>
-        <button>Перейти до TikTok</button>
+        <button onclick="window.location.href='https://www.tiktok.com/@tvoya_van'">Перейти до TikTok</button>
+        <div class="subsection">
+            <p>Мої відео в TikTok зазвичай фокусуються на гуморі і повсякденних ситуаціях.</p>
+        </div>
     </div>
 
     <!-- Контакти -->
@@ -209,24 +224,46 @@
         <button>Написати</button>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Tvoya Van. Усі права захищено.</p>
-    </footer>
+    <!-- Соціальні мережі -->
+    <div id="socials" class="section">
+        <h2>Соціальні мережі</h2>
+        <div class="stats">
+            <a href="https://www.instagram.com/tvoya_van" target="_blank" class="stat">
+                Instagram
+            </a>
+            <a href="https://www.tiktok.com/@tvoya_van" target="_blank" class="stat">
+                TikTok
+            </a>
+            <a href="https://www.youtube.com/c/tvoya_van" target="_blank
+                // Функція для отримання даних з API
+        function getFollowers() {
+            // Пример для YouTube API (Вам потрібно отримати API ключ)
+            fetch('https://www.googleapis.com/youtube/v3/channels?part=statistics&id=CHANNEL_ID&key=YOUR_API_KEY')
+                .then(response => response.json())
+                .then(data => {
+                    const youtubeFollowers = data.items[0].statistics.subscriberCount;
+                    document.getElementById('youtube-followers').innerText = youtubeFollowers;
+                });
 
-    <!-- Ініціалізація бібліотек -->
-    <script>
-        AOS.init({
-            duration: 1000, // Тривалість анімацій
-            easing: 'ease-in-out',
-            once: true
-        });
+            // Пример для TikTok API (необхідна авторизація через API TikTok)
+            fetch('https://api.tiktok.com/your-endpoint?access_token=YOUR_ACCESS_TOKEN')
+                .then(response => response.json())
+                .then(data => {
+                    const tiktokFollowers = data.user_info.follower_count;
+                    document.getElementById('tiktok-followers').innerText = tiktokFollowers;
+                });
 
-        // Плавне затемнення для навігації
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            navbar.style.background = window.scrollY > 50 ? 'rgba(0, 0, 0, 0.95)' : 'rgba(0, 0, 0, 0.8)';
-        });
+            // Пример для Instagram API (необхідна авторизація через Instagram Graph API)
+            fetch('https://graph.instagram.com/me?fields=followers_count&access_token=YOUR_ACCESS_TOKEN')
+                .then(response => response.json())
+                .then(data => {
+                    const instagramFollowers = data.followers_count;
+                    document.getElementById('instagram-followers').innerText = instagramFollowers;
+                });
+        }
+
+        // Викликаємо функцію для оновлення кількості підписників
+        getFollowers();
     </script>
 </body>
 </html>
