@@ -3,62 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loft Store</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fraktur&display=swap" rel="stylesheet">
+    <title>Tvoya Van</title>
+    <!-- Підключення шрифтів -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap">
+    <!-- Підключення бібліотек анімацій -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
-        /* Основний стиль */
-        body {
-            font-family: 'Fraktur', sans-serif;
+        /* Основні стилі */
+        * {
             margin: 0;
             padding: 0;
-            background: url('https://images.unsplash.com/photo-1533777857889-4be7c70b33f7') no-repeat center center fixed;
-            background-size: cover;
-            color: #222;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1a1a1a;
+            color: white;
             overflow-x: hidden;
         }
 
-        header {
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            text-align: center;
-            padding: 20px;
-            font-size: 2.5em;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
         nav {
-            display: flex;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.9);
-            padding: 10px;
-            position: sticky;
+            position: fixed;
             top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
             z-index: 1000;
         }
 
         nav a {
             color: white;
-            padding: 10px 20px;
             text-decoration: none;
-            text-transform: uppercase;
+            margin: 0 15px;
             font-size: 1.2em;
-            transition: background-color 0.3s ease-in-out;
         }
 
         nav a:hover {
-            background-color: #e74c3c;
+            color: #e74c3c;
         }
 
-        .tab {
-            display: none;
-            animation: fadeIn 0.5s ease-in-out;
+        .section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            text-align: center;
         }
 
-        .tab.active {
-            display: block;
+        .section:nth-child(even) {
+            background: #333;
         }
 
+        h1, h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 1.2em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .socials {
+            margin-top: 20px;
+        }
+
+        .socials a {
+            margin: 0 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.5em;
+        }
+
+        .socials a:hover {
+            color: #e74c3c;
+        }
+
+        #animateMe {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background: #e74c3c;
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        #animateMe:hover {
+            transform: scale(1.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #111;
+        }
+
+        /* Анімація Fade In */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -67,161 +117,68 @@
                 opacity: 1;
             }
         }
-
-        .container {
-            padding: 20px;
-        }
-
-        .filter {
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .filter select {
-            padding: 10px;
-            font-size: 1em;
-            border: 1px solid #444;
-            border-radius: 5px;
-        }
-
-        .product-card {
-            background-color: rgba(255, 255, 255, 0.9);
-            border: 1px solid #ddd;
-            width: 300px;
-            margin: 10px;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
-
-        .product-card:hover {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            transform: translateY(-5px);
-        }
-
-        .product-card img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
-        }
-
-        .product-name {
-            font-size: 1.5em;
-            margin-top: 15px;
-        }
-
-        .product-price {
-            font-size: 1.2em;
-            color: #e74c3c;
-            margin-top: 10px;
-        }
-
-        .product-description {
-            font-size: 1em;
-            color: #555;
-            margin-top: 15px;
-        }
-
-        footer {
-            background-color: rgba(0, 0, 0, 0.9);
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-
-        footer p {
-            margin: 0;
-        }
     </style>
 </head>
 <body>
-
-    <header>
-        Loft Store
-    </header>
-
+    <!-- Навігація -->
     <nav>
-        <a href="#home" onclick="showTab('home')">Home</a>
-        <a href="#shop" onclick="showTab('shop')">Shop</a>
-        <a href="#about" onclick="showTab('about')">About Us</a>
-        <a href="#contact" onclick="showTab('contact')">Contact</a>
+        <a href="#home">Головна</a>
+        <a href="#about">Про мене</a>
+        <a href="#content">Контент</a>
+        <a href="#contact">Контакти</a>
     </nav>
 
     <!-- Головна сторінка -->
-    <div id="home" class="tab active">
-        <div class="container">
-            <h1>Welcome to Loft Store</h1>
-            <p>Discover exclusive industrial-style products crafted with care.</p>
-        </div>
+    <div class="section" id="home">
+        <h1 data-aos="fade-down">Ласкаво просимо до Tvoya Van</h1>
+        <p data-aos="fade-up">Гумор, історії та повсякденні моменти життя!</p>
     </div>
 
-    <!-- Магазин -->
-    <div id="shop" class="tab">
-        <div class="container">
-            <div class="filter">
-                <label for="price">Filter by:</label>
-                <select id="price">
-                    <option value="all">All</option>
-                    <option value="low">Low Price</option>
-                    <option value="high">High Price</option>
-                </select>
-            </div>
-
-            <div class="products">
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300" alt="Lamp">
-                    <div class="product-name">Industrial Lamp</div>
-                    <div class="product-price">$150</div>
-                    <div class="product-description">Stylish and durable industrial lamp.</div>
-                </div>
-
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300" alt="Table">
-                    <div class="product-name">Wooden Table</div>
-                    <div class="product-price">$250</div>
-                    <div class="product-description">Minimalist wooden table for your loft interior.</div>
-                </div>
-
-                <div class="product-card">
-                    <img src="https://via.placeholder.com/300" alt="Shelf">
-                    <div class="product-name">Metal Shelf</div>
-                    <div class="product-price">$120</div>
-                    <div class="product-description">Durable and aesthetic metal shelf.</div>
-                </div>
-            </div>
-        </div>
+    <!-- Про мене -->
+    <div class="section" id="about">
+        <h2 data-aos="zoom-in">Про мене</h2>
+        <p data-aos="fade-right">
+            Я створюю контент, який приносить радість і сміх. Приєднуйся до моїх соціальних мереж, щоб бути в курсі!
+        </p>
     </div>
 
-    <!-- Про нас -->
-    <div id="about" class="tab">
-        <div class="container">
-            <h1>About Us</h1>
-            <p>Loft Store is your go-to destination for industrial-style home decor and furniture.</p>
+    <!-- Контент -->
+    <div class="section" id="content">
+        <h2 data-aos="zoom-in">Мій контент</h2>
+        <div class="socials" data-aos="fade-up">
+            <a href="https://www.tiktok.com/@tvoya_van" target="_blank">TikTok</a>
+            <a href="https://www.instagram.com/tvoya_van/" target="_blank">Instagram</a>
+            <a href="https://www.youtube.com" target="_blank">YouTube</a>
         </div>
     </div>
 
     <!-- Контакти -->
-    <div id="contact" class="tab">
-        <div class="container">
-            <h1>Contact Us</h1>
-            <p>Email: support@loftstore.com</p>
-            <p>Phone: +1 234 567 890</p>
-        </div>
+    <div class="section" id="contact">
+        <h2 data-aos="fade-left">Зв'язок</h2>
+        <p data-aos="fade-up">Email: tvoya_van@example.com</p>
+        <button id="animateMe">Натисни на мене!</button>
     </div>
 
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Loft Store. All rights reserved.</p>
+        <p>&copy; 2024 Tvoya Van. Усі права захищено.</p>
     </footer>
 
+    <!-- Ініціалізація бібліотек -->
     <script>
-        function showTab(tabId) {
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-        }
-    </script>
+        AOS.init({
+            duration: 1000, // Тривалість анімацій
+            easing: 'ease-in-out',
+            once: true
+        });
 
+        // GSAP анімація для кнопки
+        gsap.to("#animateMe", {
+            duration: 1,
+            scale: 1.2,
+            repeat: -1,
+            yoyo: true
+        });
+    </script>
 </body>
 </html>
